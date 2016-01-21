@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,13 +35,22 @@ public class MovieActivity extends AppCompatActivity implements MovieFragment.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
+        LinearLayout main = (LinearLayout) findViewById(R.id. main);
         FragmentManager manager = getFragmentManager();
-
         FragmentTransaction ft = manager.beginTransaction();
-        ft.add(R.id.container, new MovieFragment());
-        ft.commit();
+        if(main != null && findViewById(R.id.container_right) != null && findViewById(R.id.container_right).getVisibility() == View.VISIBLE) {
+            Log.v(TAG, "We are in landscape mode");
+            ft.add(R.id.container_left, new MovieFragment());
+            ft.add(R.id.container_right, new DetailFragment());
+            ft.commit();
+        } else{
+            Log.v(TAG, "We aren't in landscape mode");
+            ft.add(R.id.container, new MovieFragment());
+            ft.commit();
+        }
 
     }
 
@@ -53,12 +64,20 @@ public class MovieActivity extends AppCompatActivity implements MovieFragment.On
         bundle.putString("imdb", movie.imdbId);
 
         detail.setArguments(bundle);
+        if(findViewById(R.id.container_right) != null && findViewById(R.id.container_right).getVisibility() == View.VISIBLE){
+            //swap the fragments
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container_right, detail)
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            //swap the fragments
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, detail)
+                    .addToBackStack(null)
+                    .commit();
+        }
 
-        //swap the fragments
-        getFragmentManager().beginTransaction()
-                .replace(R.id.container, detail)
-                .addToBackStack(null)
-                .commit();
 
     }
 
