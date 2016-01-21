@@ -1,7 +1,10 @@
 package edu.uw.fragmentdemo;
 
+import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,7 +86,24 @@ public class MovieActivity extends AppCompatActivity implements MovieFragment.On
     //a method to test something!
     private void runTest() {
         Log.v(TAG, "Test button clicked!");
-
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        builder.setTitle("Alert!")
+//                .setMessage("Danger Will Robinson!");
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int id) { // User clicked OK button } }); AlertDialog dialog = builder.create(); dialog.show();
+//                Log.v(TAG, "Yay!");
+//            }
+//        });
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+        //new FavoriteFragment().newInstance().;
+//        Context context = getApplicationContext();
+//        String text = "Hello world!";
+//        int duration = Toast.LENGTH_LONG;
+//        Toast toast = Toast.makeText(context, text, duration);
+//        toast.show();
+        Toast.makeText(this, "This is Toast", Toast.LENGTH_LONG).show();
+        MovieDatabase.testDatabase(this);
     }
 
     @Override
